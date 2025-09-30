@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 # Install system dependencies
+# Updated 2025-09-30: Replaced libmysqlclient-dev with libmariadb-dev for Debian Trixie compatibility
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
