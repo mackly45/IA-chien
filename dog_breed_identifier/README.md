@@ -150,3 +150,7 @@ Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
 ## Mise à jour du Déploiement
 
 Cette mise à jour corrige les problèmes de déploiement précédents en utilisant correctement le fichier Dockerfile avec Render.
+
+## Notes de Déploiement
+
+**Dernière mise à jour :** Le déploiement fonctionne maintenant correctement avec Docker sur Render. Tous les fichiers nécessaires sont présents dans le dépôt.
