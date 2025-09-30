@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Results - Dog Breed Identifier{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">Identification Results</h1>
+            
+            <div class="card result-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="{{ file_url }}" class="img-fluid rounded" alt="Uploaded dog">
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Prediction Results</h3>
+                            {% if prediction %}
+                                <div class="alert alert-success">
+                                    <h4>{{ prediction.breed.name }}</h4>
+                                    <p><strong>Origin Country:</strong> {{ prediction.breed.origin_country }}</p>
+                                    <p><strong>Confidence:</strong> {{ prediction.confidence|floatformat:2 }}%</p>
+                                    <p><strong>Description:</strong> {{ prediction.breed.description }}</p>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <p>Unable to identify the dog breed. Please try another image.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="btn btn-primary">Identify Another Dog</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>About This Breed</h2>
+            {% if prediction %}
+                <div class="card">
+                    <div class="card-body">
+                        <h3>{{ prediction.breed.name }}</h3>
+                        <p>{{ prediction.breed.description }}</p>
+                        <h4>Origin: {{ prediction.breed.origin_country }}</h4>
+                        <p>The {{ prediction.breed.name }} is a breed that originated in {{ prediction.breed.origin_country }}. 
+                        This breed is known for its distinctive characteristics and has a rich history in its country of origin.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

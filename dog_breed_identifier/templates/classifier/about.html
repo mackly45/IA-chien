@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}About - Dog Breed Identifier{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center mb-4">About Dog Breed Identifier</h1>
+            
+            <div class="card result-card">
+                <div class="card-body">
+                    <h2>Our Mission</h2>
+                    <p>Dog Breed Identifier is an AI-powered application designed to help dog lovers, breeders, and researchers 
+                    identify dog breeds and learn about their origins. Our advanced machine learning algorithms can analyze 
+                    images of dogs and provide accurate information about their breed and country of origin.</p>
+                    
+                    <h2>How It Works</h2>
+                    <ol>
+                        <li><strong>Upload:</strong> Upload a clear photo of a dog</li>
+                        <li><strong>Analyze:</strong> Our AI analyzes the image using deep learning models</li>
+                        <li><strong>Identify:</strong> Get detailed information about the breed and its origin</li>
+                    </ol>
+                    
+                    <h2>Technology</h2>
+                    <p>Our system uses state-of-the-art computer vision and machine learning techniques to identify dog breeds. 
+                    The model has been trained on thousands of images of different dog breeds from around the world to ensure 
+                    accurate identification.</p>
+                    
+                    <h2>Database</h2>
+                    <p>We maintain a comprehensive database of dog breeds with detailed information about each breed's:
+                    <ul>
+                        <li>Physical characteristics</li>
+                        <li>Temperament</li>
+                        <li>History and origin</li>
+                        <li>Care requirements</li>
+                    </ul>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'home' %}" class="btn btn-primary">Try It Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

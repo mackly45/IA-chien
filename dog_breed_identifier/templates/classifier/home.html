@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Dog Breed Identifier{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4">Identify Dog Breeds & Origins</h1>
+        <p class="lead">Upload a photo of a dog and our AI will identify its breed and country of origin</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="upload-box">
+                <h2>Upload Dog Photo</h2>
+                <p>Upload a clear photo of a dog to identify its breed and origin</p>
+                
+                <form method="post" enctype="multipart/form-data" action="{% url 'upload_image' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="file" class="form-control" name="image" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg">Identify Dog Breed</button>
+                </form>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3>AI Powered</h3>
+                        <p>Advanced machine learning algorithms for accurate breed identification</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3>Fast Results</h3>
+                        <p>Get breed and origin information in seconds</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h3>Comprehensive Database</h3>
+                        <p>Information on hundreds of dog breeds from around the world</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
