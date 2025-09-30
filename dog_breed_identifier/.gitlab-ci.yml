@@ -1,0 +1,63 @@
+stages:
+  - test
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - venv/
+
+before_script:
+  - python -V
+  - pip install virtualenv
+  - virtualenv venv
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+
+test:
+  stage: test
+  script:
+    - python manage.py test
+  only:
+    - main
+    - master
+    - merge_requests
+
+deploy_render:
+  stage: deploy
+  script:
+    - echo "Deploying to Render"
+    - curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys" \
+           -H "Authorization: Bearer $RENDER_API_KEY" \
+           -H "Accept: application/vnd.render+json; version=latest" \
+           -d ''
+  only:
+    - main
+  environment:
+    name: production
+
+deploy_dokploy:
+  stage: deploy
+  script:
+    - echo "Deploying to Dokploy"
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$DOKPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh -o StrictHostKeyChecking=no $DOKPLOY_USERNAME@$DOKPLOY_HOST << EOF
+      cd /path/to/your/app
+      git pull origin main
+      source venv/bin/activate
+      pip install -r requirements.txt
+      python manage.py migrate
+      python manage.py collectstatic --noinput
+      sudo systemctl restart your-app-service
+      EOF
+  only:
+    - main
+  environment:
+    name: production

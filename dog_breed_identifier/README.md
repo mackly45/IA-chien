@@ -1,108 +1,146 @@
-# Dog Breed Identifier
+# Identificateur de Race de Chien
 
-A Django web application that uses machine learning to identify dog breeds and their countries of origin from uploaded images.
+Une application web Django qui utilise l'apprentissage automatique pour identifier les races de chiens et leurs pays d'origine à partir d'images téléchargées.
 
-## Features
+## Fonctionnalités
 
-- Upload dog photos for breed identification
-- AI-powered breed and origin detection
-- Detailed breed information database
-- Responsive web interface
+- Télécharger des photos de chiens pour l'identification des races
+- Détection de race et d'origine alimentée par l'IA
+- Base de données d'informations détaillées sur les races
+- Interface web réactive
 
-## Technologies Used
+## Technologies Utilisées
 
-- **Django**: Web framework for Python
-- **TensorFlow/Keras**: Machine learning framework
-- **HTML/CSS/Bootstrap**: Frontend design
-- **SQLite**: Database for development
+- **Django** : Framework web pour Python
+- **TensorFlow/Keras** : Framework d'apprentissage automatique
+- **HTML/CSS/Bootstrap** : Conception frontend
+- **SQLite** : Base de données pour le développement
+- **MySQL** : Base de données pour les données de l'application (via WAMP)
 
 ## Installation
 
-1. Clone the repository:
+1. Cloner le dépôt :
    ```
-   git clone <repository-url>
+   git clone <url-du-dépôt>
    ```
 
-2. Navigate to the project directory:
+2. Naviguer vers le répertoire du projet :
    ```
    cd dog_breed_identifier
    ```
 
-3. Create a virtual environment:
+3. Créer un environnement virtuel :
    ```
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # Sur Windows : venv\Scripts\activate
    ```
 
-4. Install dependencies:
+4. Installer les dépendances :
    ```
    pip install -r requirements.txt
    ```
 
-5. Run database migrations:
+5. Exécuter les migrations de base de données :
    ```
    python manage.py migrate
    ```
 
-6. Create a superuser (optional):
+6. Créer un superutilisateur (optionnel) :
    ```
    python manage.py createsuperuser
    ```
 
-7. Run the development server:
+7. Initialiser les races de chiens dans la base de données :
+   ```
+   python manage.py init_breeds
+   ```
+
+8. Exécuter le serveur de développement :
    ```
    python manage.py runserver
    ```
 
-8. Visit `http://127.0.0.1:8000` in your browser
+9. Visiter `http://127.0.0.1:8000` dans votre navigateur
 
-## Project Structure
+## Structure du Projet
 
 ```
 dog_breed_identifier/
-├── classifier/              # Main Django app
-│   ├── models.py           # Database models
-│   ├── views.py            # View functions
-│   ├── urls.py             # URL routing
-│   └── templates/          # HTML templates
-├── dog_identifier/         # Django project settings
-├── ml_models/              # Machine learning models
-├── static/                 # Static files (CSS, JS, images)
-├── templates/              # Base templates
-├── manage.py              # Django management script
-└── requirements.txt       # Python dependencies
+├── classifier/              # Application Django principale
+│   ├── models.py           # Modèles de base de données
+│   ├── views.py            # Fonctions de vue
+│   ├── urls.py             # Routage d'URL
+│   └── templates/          # Modèles HTML
+├── dog_identifier/         # Paramètres du projet Django
+├── ml_models/              # Modèles d'apprentissage automatique
+├── static/                 # Fichiers statiques (CSS, JS, images)
+├── templates/              # Modèles de base
+├── manage.py              # Script de gestion Django
+└── requirements.txt       # Dépendances Python
 ```
 
-## Machine Learning Model
+## Modèle d'Apprentissage Automatique
 
-The application uses a convolutional neural network (CNN) trained on the Stanford Dogs Dataset to identify dog breeds. The model can identify over 120 different dog breeds and their countries of origin.
+L'application utilise un réseau neuronal convolutionnel (CNN) entraîné sur le Stanford Dogs Dataset pour identifier les races de chiens. Le modèle peut identifier plus de 120 races de chiens différentes et leurs pays d'origine.
 
-## Database Models
+## Modèles de Base de Données
 
-1. **DogBreed**: Stores information about dog breeds
-   - Name
-   - Origin country
+1. **DogBreed** : Stocke les informations sur les races de chiens
+   - Nom
+   - Pays d'origine
    - Description
 
-2. **UploadedImage**: Stores uploaded images and prediction results
-   - Image file
-   - Upload timestamp
-   - Predicted breed (foreign key)
-   - Confidence score
+2. **UploadedImage** : Stocke les images téléchargées et les résultats de prédiction
+   - Fichier image
+   - Horodatage du téléchargement
+   - Race prédite (clé étrangère)
+   - Score de confiance
 
-## Future Improvements
+## Configuration de Base de Données Double
 
-- Implement a more sophisticated CNN model
-- Add more dog breeds to the database
-- Improve the user interface with additional features
-- Add user accounts and image history
-- Implement batch processing for multiple images
+Cette application utilise une configuration de base de données double :
+- **SQLite** : Utilisé comme base de données par défaut pour les applications intégrées de Django (admin, auth, sessions, etc.)
+- **MySQL** : Utilisé pour les données spécifiques à l'application (races de chiens, images téléchargées) via WAMP Server
 
-## License
+## Déploiement
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### Déploiement sur Render
 
-## Acknowledgments
+1. Créez un compte sur [Render](https://dashboard.render.com/)
+2. Créez un nouveau service web et connectez-le à votre dépôt GitHub/GitLab
+3. Configurez les variables d'environnement :
+   - `SECRET_KEY` : Votre clé secrète Django
+   - `DATABASE_URL` : URL de votre base de données (fournie par Render)
+4. Render déploiera automatiquement votre application après chaque push
 
-- Stanford Dogs Dataset for providing the training data
-- Django and TensorFlow communities for excellent documentation
+### Déploiement sur Dokploy
+
+1. Créez un compte sur [Dokploy](https://app.dokploy.com/dashboard/projects)
+2. Créez un nouveau projet et connectez-le à votre dépôt
+3. Configurez les variables d'environnement dans l'interface Dokploy
+4. Dokploy déploiera automatiquement votre application après chaque push
+
+### Configuration CI/CD
+
+Le projet inclut des configurations pour :
+- GitHub Actions (dans `.github/workflows/`)
+- GitLab CI/CD (dans `.gitlab-ci.yml`)
+
+Ces workflows exécutent automatiquement les tests et déploient l'application sur Render et Dokploy.
+
+## Améliorations Futures
+
+- Mettre en œuvre un modèle CNN plus sophistiqué
+- Ajouter davantage de races de chiens à la base de données
+- Améliorer l'interface utilisateur avec des fonctionnalités supplémentaires
+- Ajouter des comptes d'utilisateurs et l'historique des images
+- Mettre en œuvre le traitement par lots pour plusieurs images
+
+## Licence
+
+Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
+
+## Remerciements
+
+- Stanford Dogs Dataset pour avoir fourni les données d'entraînement
+- Communautés Django et TensorFlow pour une documentation excellente
