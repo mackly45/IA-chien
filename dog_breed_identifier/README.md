@@ -1,5 +1,7 @@
 # Identificateur de Race de Chien
 
+## Version 1.0.0
+
 Une application web Django qui utilise l'apprentissage automatique pour identifier les races de chiens et leurs pays d'origine à partir d'images téléchargées.
 
 ## Fonctionnalités
