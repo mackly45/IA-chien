@@ -1,16 +1,19 @@
 #!/bin/bash
-# Script de démarrage pour Render
+set -e
 
-# Aller dans le répertoire du projet
+# Aller dans le répertoire du projet Django
 cd /app/dog_breed_identifier
 
 # Exécuter les migrations
-python manage.py migrate
+echo "Running migrations..."
+python manage.py migrate --noinput
 
 # Collecter les fichiers statiques
-python manage.py collectstatic --noinput
+echo "Collecting static files..."
+python manage.py collectstatic --noinput --verbosity=0
 
 # Démarrer l'application avec Gunicorn
+echo "Starting application on port $PORT..."
 exec gunicorn --bind 0.0.0.0:$PORT --chdir /app/dog_breed_identifier dog_identifier.wsgi:application
 
 # Exit on any error
