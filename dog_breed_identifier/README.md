@@ -144,3 +144,7 @@ Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
 
 - Stanford Dogs Dataset pour avoir fourni les données d'entraînement
 - Communautés Django et TensorFlow pour une documentation excellente
+
+## Mise à jour du Déploiement
+
+Cette mise à jour corrige les problèmes de déploiement précédents en utilisant correctement le fichier Dockerfile avec Render.
