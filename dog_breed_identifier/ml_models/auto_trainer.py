@@ -22,15 +22,30 @@ class AutoTrainer:
         self.performance_history = []
         
     def _get_breeds_list(self) -> List[str]:
-        """Retourne la liste des races de chiens"""
+        """Retourne la liste étendue des races de chiens"""
         return [
+            # Original breeds (30)
             'Labrador Retriever', 'German Shepherd', 'Golden Retriever',
             'French Bulldog', 'Bulldog', 'Poodle', 'Beagle', 'Rottweiler',
             'Yorkshire Terrier', 'Boxer', 'Dachshund', 'Siberian Husky',
             'Great Dane', 'Chihuahua', 'Doberman', 'Shih Tzu', 'Pomeranian',
             'Australian Shepherd', 'Cocker Spaniel', 'Border Collie',
             'Saint Bernard', 'Dalmatian', 'Corgi', 'Maltese', 'Shiba Inu',
-            'Akita', 'Chow Chow', 'Bichon Frise', 'Papillon', 'Cavalier King Charles Spaniel'
+            'Akita', 'Chow Chow', 'Bichon Frise', 'Papillon', 'Cavalier King Charles Spaniel',
+            
+            # Additional breeds (40 more for better training)
+            'Basset Hound', 'Bloodhound', 'Boston Terrier', 'Bull Terrier',
+            'Cane Corso', 'Collie', 'English Setter',
+            'English Springer Spaniel', 'German Shorthaired Pointer', 'Giant Schnauzer',
+            'Irish Setter', 'Italian Greyhound', 'Keeshond', 'Komondor',
+            'Leonberger', 'Lhasa Apso', 'Mastiff', 'Newfoundland',
+            'Norwegian Elkhound', 'Nova Scotia Duck Tolling Retriever', 'Old English Sheepdog',
+            'Pembroke Welsh Corgi', 'Pharaoh Hound', 'Plott', 'Pointer',
+            'Portuguese Water Dog', 'Pug', 'Rhodesian Ridgeback', 'Saluki',
+            'Samoyed', 'Scottish Terrier', 'Sealyham Terrier', 'Shetland Sheepdog',
+            'Smooth Fox Terrier', 'Tibetan Mastiff', 'Tibetan Spaniel', 'Tibetan Terrier',
+            'Toy Fox Terrier', 'Vizsla', 'Weimaraner', 'Welsh Springer Spaniel',
+            'West Highland White Terrier', 'Whippet', 'Wire Fox Terrier', 'Wirehaired Pointing Griffon'
         ]
     
     def collect_new_data(self, num_images_per_breed=5) -> bool:

@@ -13,6 +13,10 @@ Une application web Django qui utilise l'apprentissage automatique pour identifi
 - Entraînement automatique du modèle avec de nouvelles données
 - Collecte automatique d'images pour améliorer le modèle
 - Prédictions alternatives pour une identification plus précise
+- Entraînement avancé avec augmentation de données
+- Apprentissage continu pour amélioration progressive
+- Validation et nettoyage automatique du dataset
+- Collecte automatique complète de toutes les races avec un bon pourcentage de qualité
 
 ## Technologies Utilisées
 
@@ -154,6 +158,34 @@ Pour entraîner manuellement le modèle :
 python manage.py auto_train
 ```
 
+### Exécution de l'entraînement avancé
+
+Pour entraîner le modèle avec des techniques avancées :
+```
+python manage.py advanced_train --epochs 100 --iterations 3
+```
+
+### Exécution de l'entraînement complet avec collecte automatique
+
+Pour collecter automatiquement des données pour toutes les races avec un bon pourcentage de qualité :
+```
+python manage.py advanced_train --epochs 100 --auto-collect --quality-threshold 0.85
+```
+
+### Exécution de l'apprentissage continu
+
+Pour exécuter plusieurs sessions d'entraînement sur une période prolongée :
+```
+python manage.py advanced_train --continuous --iterations 5 --auto-collect
+```
+
+### Validation du dataset
+
+Pour valider et nettoyer le dataset :
+```
+python manage.py validate_dataset --clean --balance --export dataset_report.md
+```
+
 ### Configuration des tâches planifiées
 
 Vous pouvez configurer des tâches planifiées pour exécuter l'entraînement automatique périodiquement :
@@ -175,9 +207,11 @@ Vous pouvez configurer des tâches planifiées pour exécuter l'entraînement au
 - Ajouter davantage de races de chiens à la base de données
 - Améliorer l'interface utilisateur avec des fonctionnalités supplémentaires
 - Ajouter des comptes d'utilisateurs et l'historique des images
-- Mettre en œuvre le traitement par lots pour plusieurs images
+- Mettre en place le traitement par lots pour plusieurs images
 - Améliorer la collecte de données avec des sources plus variées
 - Implémenter des techniques d'augmentation d'images pour améliorer la robustesse du modèle
+- Mettre en place un système de feedback utilisateur pour améliorer les prédictions
+- Ajouter la reconnaissance de plusieurs chiens dans une seule image
 
 ## Licence
 

@@ -11,10 +11,11 @@ from .models import UploadedImage, DogBreed
 # Importer le nouveau classifieur amélioré
 from ml_models.enhanced_model import EnhancedDogBreedClassifier
 from ml_models.auto_trainer import AutoTrainer
+from ml_models.advanced_trainer import AdvancedTrainer  # Nouvel import
 from ml_models.data_manager import DataManager
 
 # Initialiser le classifieur amélioré
-classifier = EnhancedDogBreedClassifier(num_classes=30)
+classifier = EnhancedDogBreedClassifier(num_classes=70)  # Augmenter le nombre de classes
 classifier.build_model()
 
 def home(request):
@@ -29,7 +30,19 @@ def upload_image(request):
         file_url = default_storage.url(file_name)
         
         # Create a new UploadedImage instance in MySQL database
-        uploaded_image = UploadedImage.objects.using('mysql').create(image=file_name)  # type: ignore[attr-defined]
+        # Only set the required image field during creation
+        uploaded_image = UploadedImage.objects.using('mysql').create(  # type: ignore[attr-defined]
+            image=file_name
+        )
+        
+        # Set the optional fields after creation
+        uploaded_image.predicted_breed = None  # type: ignore[attr-defined]
+        uploaded_image.confidence_score = None
+        uploaded_image.second_breed = None  # type: ignore[attr-defined]
+        uploaded_image.second_confidence = None
+        uploaded_image.third_breed = None  # type: ignore[attr-defined]
+        uploaded_image.third_confidence = None
+        uploaded_image.save(using='mysql')
         
         # Use our ML model to predict the breed
         prediction_result = predict_dog_breed(file_name)
@@ -85,7 +98,7 @@ def predict_dog_breed(image_path):
         
         # Préparer les prédictions alternatives
         alternatives = []
-        for i, (breed_name, confidence) in enumerate(sorted_predictions[1:3]):  # Prendre les 2 suivantes
+        for i, (breed_name, confidence) in enumerate(sorted_predictions[1:4]):  # Prendre les 3 suivantes au lieu de 2
             alt_breed, _ = DogBreed.objects.using('mysql').get_or_create(  # type: ignore[attr-defined]
                 name=breed_name,
                 defaults={
@@ -140,11 +153,86 @@ def train_model(request):
     
     return redirect('home')
 
+# Nouvelles vues pour l'entraînement avancé
+def advanced_train_model(request):
+    """Vue pour déclencher l'entraînement avancé du modèle"""
+    if request.method == 'POST':
+        try:
+            # Initialiser l'entraîneur avancé
+            advanced_trainer = AdvancedTrainer()
+            
+            # Démarrer une session d'entraînement intensive
+            result = advanced_trainer.intensive_training_session(epochs=30)
+            
+            if result["success"]:
+                messages.success(request, f"Entraînement avancé réussi! Précision: {result['final_accuracy']:.2%} (+{result['improvement']:.2%})")
+            else:
+                messages.error(request, f"Échec de l'entraînement avancé: {result.get('error', 'Erreur inconnue')}")
+                
+        except Exception as e:
+            messages.error(request, f"Erreur lors de l'entraînement avancé: {str(e)}")
+    
+    return redirect('home')
+
+def comprehensive_train_model(request):
+    """Vue pour déclencher l'entraînement complet avec collecte automatique de toutes les races"""
+    if request.method == 'POST':
+        try:
+            # Initialiser l'entraîneur avancé
+            advanced_trainer = AdvancedTrainer()
+            
+            # Démarrer une session d'entraînement intensive avec collecte automatique
+            result = advanced_trainer.intensive_training_session(
+                epochs=50,
+                auto_collect=True,
+                quality_threshold=0.85
+            )
+            
+            if result["success"]:
+                messages.success(request, f"Entraînement complet réussi! Précision: {result['final_accuracy']:.2%} (+{result['improvement']:.2%})")
+                messages.info(request, "Toutes les races ont été collectées automatiquement avec un bon pourcentage de qualité.")
+            else:
+                messages.error(request, f"Échec de l'entraînement complet: {result.get('error', 'Erreur inconnue')}")
+                
+        except Exception as e:
+            messages.error(request, f"Erreur lors de l'entraînement complet: {str(e)}")
+    
+    return redirect('home')
+
+def continuous_learning(request):
+    """Vue pour déclencher l'apprentissage continu"""
+    if request.method == 'POST':
+        try:
+            # Initialiser l'entraîneur avancé
+            advanced_trainer = AdvancedTrainer()
+            
+            # Démarrer une boucle d'apprentissage continu
+            result = advanced_trainer.continuous_learning_loop(iterations=3, hours_between_sessions=1)
+            
+            if result["success"]:
+                messages.success(request, f"Apprentissage continu terminé! Amélioration globale: {result['overall_improvement']:.2%}")
+            else:
+                messages.error(request, f"Échec de l'apprentissage continu: {result.get('error', 'Erreur inconnue')}")
+                
+        except Exception as e:
+            messages.error(request, f"Erreur lors de l'apprentissage continu: {str(e)}")
+    
+    return redirect('home')
+
 def training_stats(request):
     """Vue pour afficher les statistiques d'entraînement"""
     try:
         trainer = AutoTrainer()
         stats = trainer.get_training_stats()
+        return JsonResponse(stats)
+    except Exception as e:
+        return JsonResponse({"error": str(e)})
+
+def advanced_training_stats(request):
+    """Vue pour afficher les statistiques d'entraînement avancées"""
+    try:
+        advanced_trainer = AdvancedTrainer()
+        stats = advanced_trainer.get_advanced_training_stats()
         return JsonResponse(stats)
     except Exception as e:
         return JsonResponse({"error": str(e)})

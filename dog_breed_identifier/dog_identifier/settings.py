@@ -50,7 +50,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-#_x!$#)v=+!0%r!+!v!+!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'], cast=lambda x: x.split(',') if isinstance(x, str) else x)
 
 
 # Application definition
@@ -104,17 +104,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'mysql': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('MYSQL_DATABASE', default='dog_breed_db'),
-        'USER': config('MYSQL_USER', default='root'),
-        'PASSWORD': config('MYSQL_PASSWORD', default=''),
-        'HOST': config('MYSQL_HOST', default='localhost'),
-        'PORT': config('MYSQL_PORT', default='3306'),
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
     }
 }
 
@@ -122,10 +111,6 @@ DATABASES = {
 DATABASE_URL = config('DATABASE_URL', default='')
 if DATABASE_URL and USE_DJ_DATABASE_URL and dj_database_url is not None:
     DATABASES['default'] = dj_database_url.parse(DATABASE_URL)  # type: ignore
-
-# Database router configuration
-DATABASE_ROUTERS = ['dog_identifier.db_router.DatabaseRouter']
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

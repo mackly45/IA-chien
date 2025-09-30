@@ -26,6 +26,43 @@
                 </form>
             </div>
             
+            <!-- Advanced Training Section -->
+            <div class="training-box mt-5">
+                <h2>Model Training Options</h2>
+                <p>Enhance the AI model with additional training</p>
+                
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <form method="post" action="{% url 'train_model' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary btn-block">Standard Training</button>
+                        </form>
+                        <small class="text-muted">Collect new data and train model</small>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <form method="post" action="{% url 'advanced_train_model' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning btn-block">Advanced Training</button>
+                        </form>
+                        <small class="text-muted">Intensive training session with data augmentation</small>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <form method="post" action="{% url 'comprehensive_train_model' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-info btn-block">Comprehensive Training</button>
+                        </form>
+                        <small class="text-muted">Automatic collection for all breeds with high quality</small>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <form method="post" action="{% url 'continuous_learning' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-block">Continuous Learning</button>
+                        </form>
+                        <small class="text-muted">Multiple training sessions over time</small>
+                    </div>
+                </div>
+            </div>
+            
             <div class="row mt-5">
                 <div class="col-md-4">
                     <div class="text-center">
