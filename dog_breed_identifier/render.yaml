@@ -1,7 +1,7 @@
 services:
   - type: web
     name: dog-breed-identifier
-    env: python
+    env: docker
     buildCommand: "./build.sh"
     startCommand: "gunicorn dog_identifier.wsgi:application"
     envVars:
