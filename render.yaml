@@ -10,7 +10,7 @@ services:
       - key: WEB_CONCURRENCY
         value: 4
       - key: PYTHONPATH
-        value: /app
+        value: /app/dog_breed_identifier
 
 databases:
   - name: dogbreeddb

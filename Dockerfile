@@ -25,11 +25,11 @@ RUN apt-get update \
 # Copy project
 COPY . /app/
 
-# Install pip requirements
-RUN python -m pip install -r dog_breed_identifier/requirements.txt
-
 # Change to the project directory
 WORKDIR /app/dog_breed_identifier
+
+# Install pip requirements
+RUN python -m pip install -r requirements.txt
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
