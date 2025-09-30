@@ -1,0 +1,29 @@
+# Exemples de configuration pour l'entraînement automatique périodique
+
+# Pour Linux/macOS (ajouter à crontab avec 'crontab -e'):
+# Exécuter l'entraînement tous les jours à 2h du matin
+0 2 * * * /path/to/project/scripts/run_auto_train.sh
+
+# Exécuter une vérification d'entraînement toutes les heures
+0 * * * * cd /path/to/project && python manage.py auto_train --images-per-breed 1 --force
+
+# Pour Windows (utiliser le Planificateur de tâches):
+# 1. Ouvrir le Planificateur de tâches
+# 2. Créer une nouvelle tâche
+# 3. Définir le déclencheur (par exemple, tous les jours à 2h00)
+# 4. Définir l'action pour exécuter:
+#    Programme: powershell.exe
+#    Arguments: -ExecutionPolicy Bypass -File "C:\chemin\vers\project\scripts\run_auto_train.ps1"
+
+# Pour les services cloud (Render, Heroku, etc.):
+# Utiliser les fonctionnalités de tâches planifiées du service cloud
+# Par exemple, sur Render, vous pouvez utiliser le cron intégré:
+# https://render.com/docs/cronjobs
+
+# Exemple de configuration pour Render (render.yaml):
+# services:
+#   - type: cron
+#     name: auto-train-model
+#     schedule: "0 2 * * *"
+#     buildCommand: "pip install -r requirements.txt"
+#     startCommand: "python scripts/auto_train_scheduler.py"

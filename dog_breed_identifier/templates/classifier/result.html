@@ -23,6 +23,19 @@
                                     <p><strong>Confidence:</strong> {{ prediction.confidence|floatformat:2 }}%</p>
                                     <p><strong>Description:</strong> {{ prediction.breed.description }}</p>
                                 </div>
+                                
+                                <!-- Afficher les prédictions alternatives -->
+                                {% if prediction.alternatives %}
+                                <div class="mt-3">
+                                    <h5>Alternative Possibilities:</h5>
+                                    {% for alt in prediction.alternatives %}
+                                    <div class="alert alert-info">
+                                        <h6>{{ alt.breed.name }}</h6>
+                                        <p><strong>Confidence:</strong> {{ alt.confidence|floatformat:2 }}%</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
                             {% else %}
                                 <div class="alert alert-warning">
                                     <p>Unable to identify the dog breed. Please try another image.</p>
@@ -50,6 +63,20 @@
                         <h4>Origin: {{ prediction.breed.origin_country }}</h4>
                         <p>The {{ prediction.breed.name }} is a breed that originated in {{ prediction.breed.origin_country }}. 
                         This breed is known for its distinctive characteristics and has a rich history in its country of origin.</p>
+                        
+                        <!-- Afficher les informations supplémentaires sur la race -->
+                        {% if prediction.breed.size %}
+                        <p><strong>Size:</strong> {{ prediction.breed.size }}</p>
+                        {% endif %}
+                        {% if prediction.breed.group %}
+                        <p><strong>Group:</strong> {{ prediction.breed.group }}</p>
+                        {% endif %}
+                        {% if prediction.breed.lifespan %}
+                        <p><strong>Lifespan:</strong> {{ prediction.breed.lifespan }}</p>
+                        {% endif %}
+                        {% if prediction.breed.temperament %}
+                        <p><strong>Temperament:</strong> {{ prediction.breed.temperament }}</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}

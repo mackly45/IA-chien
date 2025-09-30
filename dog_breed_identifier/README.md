@@ -10,6 +10,9 @@ Une application web Django qui utilise l'apprentissage automatique pour identifi
 - Détection de race et d'origine alimentée par l'IA
 - Base de données d'informations détaillées sur les races
 - Interface web réactive
+- Entraînement automatique du modèle avec de nouvelles données
+- Collecte automatique d'images pour améliorer le modèle
+- Prédictions alternatives pour une identification plus précise
 
 ## Technologies Utilisées
 
@@ -91,12 +94,17 @@ L'application utilise un réseau neuronal convolutionnel (CNN) entraîné sur le
    - Nom
    - Pays d'origine
    - Description
+   - Taille
+   - Groupe
+   - Espérance de vie
+   - Tempérament
 
 2. **UploadedImage** : Stocke les images téléchargées et les résultats de prédiction
    - Fichier image
    - Horodatage du téléchargement
    - Race prédite (clé étrangère)
    - Score de confiance
+   - Prédictions alternatives
 
 ## Configuration de Base de Données Double
 
@@ -130,6 +138,37 @@ Le projet inclut des configurations pour :
 
 Ces workflows exécutent automatiquement les tests et déploient l'application sur Render et Dokploy.
 
+## Entraînement Automatique
+
+L'application comprend un système d'entraînement automatique qui :
+
+1. **Collecte automatiquement de nouvelles données** : Télécharge des images de races de chiens à partir d'API en ligne
+2. **Équilibre le dataset** : S'assure qu'il y a un nombre suffisant d'images pour chaque race
+3. **Entraîne périodiquement le modèle** : Met à jour le modèle d'apprentissage automatique avec de nouvelles données
+4. **Surveille les performances** : Suit l'exactitude du modèle et déclenche un nouvel entraînement si nécessaire
+
+### Exécution de l'entraînement manuel
+
+Pour entraîner manuellement le modèle :
+```
+python manage.py auto_train
+```
+
+### Configuration des tâches planifiées
+
+Vous pouvez configurer des tâches planifiées pour exécuter l'entraînement automatique périodiquement :
+
+**Sur Linux/macOS (cron)** :
+```
+# Exécuter l'entraînement tous les jours à 2h du matin
+0 2 * * * /path/to/project/scripts/run_auto_train.sh
+```
+
+**Sur Windows (Planificateur de tâches)** :
+1. Ouvrez le Planificateur de tâches
+2. Créez une nouvelle tâche
+3. Configurez-la pour exécuter `scripts/run_auto_train.ps1` périodiquement
+
 ## Améliorations Futures
 
 - Mettre en œuvre un modèle CNN plus sophistiqué
@@ -137,6 +176,8 @@ Ces workflows exécutent automatiquement les tests et déploient l'application s
 - Améliorer l'interface utilisateur avec des fonctionnalités supplémentaires
 - Ajouter des comptes d'utilisateurs et l'historique des images
 - Mettre en œuvre le traitement par lots pour plusieurs images
+- Améliorer la collecte de données avec des sources plus variées
+- Implémenter des techniques d'augmentation d'images pour améliorer la robustesse du modèle
 
 ## Licence
 
