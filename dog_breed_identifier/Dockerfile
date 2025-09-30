@@ -11,7 +11,7 @@ WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
-        libmysqlclient-dev \
+        libmariadb-dev \
         default-libmysqlclient-dev \
         pkg-config \
     && rm -rf /var/lib/apt/lists/*
