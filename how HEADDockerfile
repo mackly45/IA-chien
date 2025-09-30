@@ -1,0 +1,5 @@
+[33ma7f1717[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Ajout des scripts d'automatisation du déploiement et de versioning automatique
+[33m11bdfbf[m version
+[33m04205a6[m Update README with deployment fix information
+[33m07cc096[m Update render.yaml to use docker environment
+[33m48a37f7[m Add deployment configurations for Render and Dokploy - CI/CD workflows, Dockerfile, and deployment manifests
