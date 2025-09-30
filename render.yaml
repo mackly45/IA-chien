@@ -4,6 +4,8 @@ services:
     env: docker
     region: frankfurt  # Default region
     plan: free  # Free tier
+    buildCommand: "chmod +x render_start.sh"
+    startCommand: "./render_start.sh"
     envVars:
       - key: SECRET_KEY
         generateValue: true
@@ -11,6 +13,8 @@ services:
         value: 4
       - key: PYTHONPATH
         value: /app/dog_breed_identifier
+      - key: PORT
+        value: 8000
 
 databases:
   - name: dogbreeddb

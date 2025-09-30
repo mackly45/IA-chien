@@ -29,20 +29,20 @@ def upload_image(request):
         file_name = default_storage.save(f'dog_images/{image.name}', image)
         file_url = default_storage.url(file_name)
         
-        # Create a new UploadedImage instance in MySQL database
+        # Create a new UploadedImage instance
         # Only set the required image field during creation
-        uploaded_image = UploadedImage.objects.using('mysql').create(  # type: ignore[attr-defined]
+        uploaded_image = UploadedImage.objects.create(  # type: ignore[attr-defined]
             image=file_name
         )
         
         # Set the optional fields after creation
-        uploaded_image.predicted_breed = None  # type: ignore[attr-defined]
+        uploaded_image.predicted_breed = None
         uploaded_image.confidence_score = None
-        uploaded_image.second_breed = None  # type: ignore[attr-defined]
+        uploaded_image.second_breed = None
         uploaded_image.second_confidence = None
-        uploaded_image.third_breed = None  # type: ignore[attr-defined]
+        uploaded_image.third_breed = None
         uploaded_image.third_confidence = None
-        uploaded_image.save(using='mysql')
+        uploaded_image.save()
         
         # Use our ML model to predict the breed
         prediction_result = predict_dog_breed(file_name)
@@ -59,7 +59,7 @@ def upload_image(request):
                 uploaded_image.third_breed = prediction_result['alternatives'][1]['breed']
                 uploaded_image.third_confidence = prediction_result['alternatives'][1]['confidence']
             
-            uploaded_image.save(using='mysql')
+            uploaded_image.save()
         
         context = {
             'uploaded_image': uploaded_image,
@@ -83,8 +83,8 @@ def predict_dog_breed(image_path):
         sorted_predictions = sorted(predictions, key=lambda x: x[1], reverse=True)
         top_prediction = sorted_predictions[0]
         
-        # Get or create the breed in our MySQL database
-        breed, created = DogBreed.objects.using('mysql').get_or_create(  # type: ignore[attr-defined]
+        # Get or create the breed in our database
+        breed, created = DogBreed.objects.get_or_create(  # type: ignore[attr-defined]
             name=top_prediction[0],
             defaults={
                 'origin_country': 'Unknown',  # À améliorer avec des données réelles
@@ -99,7 +99,7 @@ def predict_dog_breed(image_path):
         # Préparer les prédictions alternatives
         alternatives = []
         for i, (breed_name, confidence) in enumerate(sorted_predictions[1:4]):  # Prendre les 3 suivantes au lieu de 2
-            alt_breed, _ = DogBreed.objects.using('mysql').get_or_create(  # type: ignore[attr-defined]
+            alt_breed, _ = DogBreed.objects.get_or_create(  # type: ignore[attr-defined]
                 name=breed_name,
                 defaults={
                     'origin_country': 'Unknown',
@@ -125,8 +125,8 @@ def predict_dog_breed(image_path):
     return None
 
 def about(request):
-    # Get breed information from MySQL database
-    breeds = DogBreed.objects.using('mysql').all()  # type: ignore[attr-defined]
+    # Get breed information from database
+    breeds = DogBreed.objects.all()  # type: ignore[attr-defined]
     return render(request, 'classifier/about.html', {'breeds': breeds})
 
 # Nouvelles vues pour l'entraînement automatique

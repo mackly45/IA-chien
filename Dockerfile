@@ -18,7 +18,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         libmariadb-dev \
-        default-libmysqlclient-dev \
+        libmariadb-dev-compat \
         pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
