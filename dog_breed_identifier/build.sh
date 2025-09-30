@@ -2,9 +2,6 @@
 # exit on error
 set -o errexit
 
-# Change to the app directory
-cd /app
-
 # Install Python dependencies
 pip install -r requirements.txt
 

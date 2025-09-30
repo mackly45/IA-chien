@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: dog-breed-identifier
+    env: docker
+    region: frankfurt  # Default region
+    plan: free  # Free tier
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+      - key: PYTHONPATH
+        value: /app
+
+databases:
+  - name: dogbreeddb
+    databaseName: dogbreeddb
+    user: dogbreeduser
+    region: frankfurt  # Default region
+    plan: free  # Free tier

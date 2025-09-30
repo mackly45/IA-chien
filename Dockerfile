@@ -22,12 +22,14 @@ RUN apt-get update \
         pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pip requirements
-COPY requirements.txt /app/
-RUN python -m pip install -r requirements.txt
-
 # Copy project
 COPY . /app/
+
+# Install pip requirements
+RUN python -m pip install -r dog_breed_identifier/requirements.txt
+
+# Change to the project directory
+WORKDIR /app/dog_breed_identifier
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
@@ -38,4 +40,4 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--chdir", "/app", "dog_identifier.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--chdir", "/app/dog_breed_identifier", "dog_identifier.wsgi:application"]
