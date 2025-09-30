@@ -11,6 +11,7 @@ services:
     volumes:
       - ./dog_breed_identifier/media:/app/dog_breed_identifier/media
       - ./dog_breed_identifier/staticfiles:/app/dog_breed_identifier/staticfiles
+    command: python dog_breed_identifier/manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
 

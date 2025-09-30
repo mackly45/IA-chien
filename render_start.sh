@@ -1,4 +1,17 @@
 #!/bin/bash
+# Script de démarrage pour Render
+
+# Aller dans le répertoire du projet
+cd /app/dog_breed_identifier
+
+# Exécuter les migrations
+python manage.py migrate
+
+# Collecter les fichiers statiques
+python manage.py collectstatic --noinput
+
+# Démarrer l'application avec Gunicorn
+exec gunicorn --bind 0.0.0.0:$PORT --chdir /app/dog_breed_identifier dog_identifier.wsgi:application
 
 # Exit on any error
 set -e
