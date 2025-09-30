@@ -11,9 +11,31 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config, Csv
 import os
-import dj_database_url
+
+# Try to import decouple, fallback to os.environ if not available
+try:
+    from decouple import config, Csv  # type: ignore
+    USE_DECOUPLE = True
+except ImportError:
+    def config(key, default=None, cast=None):
+        value = os.environ.get(key, default)
+        if cast == bool and isinstance(value, str):
+            return value.lower() in ('true', '1', 'yes', 'on')
+        return value
+    
+    def Csv():
+        return lambda x: x.split(',') if x else []
+    
+    USE_DECOUPLE = False
+
+# Try to import dj_database_url, fallback to manual configuration if not available
+try:
+    import dj_database_url  # type: ignore
+    USE_DJ_DATABASE_URL = True
+except ImportError:
+    dj_database_url = None
+    USE_DJ_DATABASE_URL = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -98,8 +120,8 @@ DATABASES = {
 
 # Parse DATABASE_URL environment variable for Render deployment
 DATABASE_URL = config('DATABASE_URL', default='')
-if DATABASE_URL:
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL)
+if DATABASE_URL and USE_DJ_DATABASE_URL and dj_database_url is not None:
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL)  # type: ignore
 
 # Database router configuration
 DATABASE_ROUTERS = ['dog_identifier.db_router.DatabaseRouter']
