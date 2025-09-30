@@ -29,6 +29,7 @@ COPY . /app/
 WORKDIR /app/dog_breed_identifier
 
 # Install pip requirements
+RUN python -m pip install --upgrade pip
 RUN python -m pip install -r requirements.txt
 
 # Collect static files
