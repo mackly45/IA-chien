@@ -25,7 +25,7 @@ except ImportError:
         return value
     
     def Csv():
-        return lambda x: x.split(',') if x else []
+        return lambda x: [item.strip() for item in x.split(',')] if x else []
     
     USE_DECOUPLE = False
 
