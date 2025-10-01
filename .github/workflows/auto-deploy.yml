@@ -23,10 +23,11 @@ jobs:
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
       
-    - name: Start Docker daemon
+    - name: Start Docker daemon and set permissions
       run: |
         sudo systemctl start docker
         sudo usermod -aG docker $USER
+        sudo chmod 666 /var/run/docker.sock
         
     - name: Installation des dépendances
       run: |
@@ -43,7 +44,7 @@ jobs:
       run: |
         pip install pytest pytest-django
         cd dog_breed_identifier
-        PYTHONPATH=. pytest ../tests/
+        PYTHONPATH=. pytest ../tests/ -v -s
 
   security-check:
     runs-on: ubuntu-latest

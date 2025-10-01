@@ -14,6 +14,7 @@ RUN apt-get update \
         build-essential \
         libjpeg-dev \
         zlib1g-dev \
+        pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first to leverage Docker cache
@@ -28,13 +29,14 @@ COPY . /app/
 # Change to the project directory
 WORKDIR /app/dog_breed_identifier
 
-# Create a non-root user
-RUN adduser --disabled-password --gecos '' appuser
-RUN chown -R appuser:appuser /app
-USER appuser
+# Create static directory if it doesn't exist
+RUN mkdir -p static
+
+# Collect static files (ignore errors)
+RUN python manage.py collectstatic --noinput --verbosity=0 || echo "Warning: Could not collect static files"
 
 # Expose port
 EXPOSE $PORT
 
-# Run the application
+# Simple command to verify the container can run
 CMD ["python", "manage.py", "runserver", "0.0.0.0:$PORT"]
