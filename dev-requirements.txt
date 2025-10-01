@@ -1,0 +1,15 @@
+# Dépendances de développement
+
+# Outils de test
+pytest>=7.0.0
+pytest-django>=4.5.0
+coverage>=6.0.0
+
+# Outils de linting
+flake8>=5.0.0
+black>=22.0.0
+isort>=5.0.0
+
+# Outils de développement
+django-extensions>=3.0.0
+ipython>=8.0.0

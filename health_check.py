@@ -1,36 +1,56 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
-Health check script for Render deployment
+Script de vérification de la santé de l'application.
 """
+
 import os
 import sys
 import django
-from django.conf import settings
+from django.core.management import execute_from_command_line
 
-# Add project directory to Python path
-sys.path.append('/app/dog_breed_identifier')
-
-# Setup Django
+# Configuration de Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dog_identifier.settings')
 django.setup()
 
-def check_health():
-    """Check application health"""
+def check_database():
+    """Vérifie la connexion à la base de données."""
     try:
-        # Check that Django can load
         from django.db import connection
-        
-        # Check database connection
         connection.ensure_connection()
-        
-        print("Health check passed")
         return True
     except Exception as e:
-        print(f"Health check failed: {e}")
+        print(f"Erreur de connexion à la base de données: {e}")
         return False
 
-if __name__ == "__main__":
-    if check_health():
-        sys.exit(0)
-    else:
+def check_ml_model():
+    """Vérifie que le modèle ML est disponible."""
+    try:
+        # Ajoutez ici la vérification de votre modèle ML
+        # Par exemple, vérifier que le fichier du modèle existe
+        model_path = os.path.join(os.path.dirname(__file__), 'ml_models', 'dog_breed_model.h5')
+        return os.path.exists(model_path)
+    except Exception as e:
+        print(f"Erreur avec le modèle ML: {e}")
+        return False
+
+def main():
+    """Point d'entrée principal."""
+    print("Vérification de la santé de l'application...")
+    
+    # Vérifier la base de données
+    if not check_database():
+        print("❌ Échec de la vérification de la base de données")
         sys.exit(1)
+    
+    print("✅ Base de données OK")
+    
+    # Vérifier le modèle ML
+    if not check_ml_model():
+        print("❌ Échec de la vérification du modèle ML")
+        sys.exit(1)
+    
+    print("✅ Modèle ML OK")
+    print("✅ Tous les systèmes sont opérationnels")
+
+if __name__ == '__main__':
+    main()

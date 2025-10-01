@@ -9,9 +9,10 @@ services:
       - DEBUG=1
       - SECRET_KEY=django-insecure-local-development-key-for-testing-only
     volumes:
+      - ./dog_breed_identifier:/app/dog_breed_identifier
       - ./dog_breed_identifier/media:/app/dog_breed_identifier/media
       - ./dog_breed_identifier/staticfiles:/app/dog_breed_identifier/staticfiles
-    command: python dog_breed_identifier/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
 
   # Production version with Gunicorn
   web-prod:
@@ -24,3 +25,9 @@ services:
     volumes:
       - ./dog_breed_identifier/media:/app/dog_breed_identifier/media
       - ./dog_breed_identifier/staticfiles:/app/dog_breed_identifier/staticfiles
+    healthcheck:
+      test: ["CMD", "python", "/app/health_check.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

@@ -1,0 +1,27 @@
+# Configuration de Dependabot pour la mise à jour automatique des dépendances
+
+version: 2
+updates:
+  # Mise à jour des dépendances Python
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "mackly45"
+    labels:
+      - "dependencies"
+      - "python"
+
+  # Mise à jour des dépendances Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "mackly45"
+    labels:
+      - "dependencies"
+      - "docker"

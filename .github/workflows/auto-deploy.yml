@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  schedule:
+    # Exécuter un déploiement hebdomadaire
+    - cron: '0 2 * * 1'  # Tous les lundis à 2h UTC
 
 jobs:
   test:
@@ -21,14 +24,40 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install -r tests/test_requirements.txt
         
     - name: Tests de l'application
       run: |
         cd dog_breed_identifier
         python manage.py check
+        
+    - name: Tests unitaires
+      run: |
+        pip install pytest pytest-django
+        pytest tests/
+
+  security-check:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Configuration Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Installation des dépendances
+      run: |
+        python -m pip install --upgrade pip
+        pip install pip-audit
+        
+    - name: Vérification des vulnérabilités
+      run: |
+        pip-audit
 
   build-and-deploy:
-    needs: test
+    needs: [test, security-check]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     
@@ -61,3 +90,7 @@ jobs:
     - name: Notification de succès
       if: success()
       run: echo "Déploiement automatique terminé avec succès !"
+      
+    - name: Notification d'échec
+      if: failure()
+      run: echo "Déploiement automatique échoué !"

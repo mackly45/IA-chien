@@ -1,19 +1,34 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Containers: Python - Django",
-            "type": "docker",
+            "name": "Django: Runserver",
+            "type": "python",
             "request": "launch",
-            "preLaunchTask": "docker-run: debug",
-            "python": {
-                "pathMappings": [
-                    {
-                        "localRoot": "${workspaceFolder}",
-                        "remoteRoot": "/app"
-                    }
-                ],
-                "projectType": "django"
-            }
+            "program": "${workspaceFolder}/dog_breed_identifier/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Django: Tests",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/dog_breed_identifier/manage.py",
+            "args": [
+                "test"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
         }
     ]
 }

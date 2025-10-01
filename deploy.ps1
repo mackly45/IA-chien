@@ -30,6 +30,26 @@ if (Test-Path $envFile) {
     Write-Host "Fichier $envFile non trouvé. Utilisation des variables d'environnement du système." -ForegroundColor Yellow
 }
 
+# Fonction pour vérifier les prérequis
+function Check-Prerequisites {
+    Write-Host "Vérification des prérequis..." -ForegroundColor Yellow
+    
+    # Vérifier Docker
+    docker --version > $null 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Docker n'est pas installé!" -ForegroundColor Red
+        exit 1
+    }
+    
+    # Vérifier les variables d'environnement
+    if (-not $env:DOCKER_USERNAME -or -not $env:DOCKER_PASSWORD) {
+        Write-Host "Variables d'environnement DOCKER_USERNAME et DOCKER_PASSWORD non définies!" -ForegroundColor Red
+        exit 1
+    }
+    
+    Write-Host "Tous les prérequis sont satisfaits." -ForegroundColor Green
+}
+
 # Fonction pour construire l'image Docker
 function Build-DockerImage {
     Write-Host "Construction de l'image Docker..." -ForegroundColor Yellow

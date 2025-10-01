@@ -2,6 +2,14 @@
 
 A Django application that uses machine learning to identify dog breeds from images.
 
+## Features
+
+- 🐶 **Dog Breed Recognition**: Identify over 120 dog breeds using deep learning
+- 🐕 **Web Interface**: User-friendly web application for image upload
+- 🐳 **Docker Support**: Containerized application for easy deployment
+- ☁️ **Multi-platform Deployment**: Deploy to Docker Hub, Render, and more
+- 🔄 **CI/CD Integration**: Automated testing and deployment with GitHub Actions and GitLab CI
+
 ## Docker Deployment
 
 This project includes Docker configuration for easy deployment across multiple platforms.
@@ -183,6 +191,26 @@ The production Docker image:
 - Runs as a non-root user for security
 - Collects static files during the build process
 - Is optimized for size and performance
+
+## Project Structure
+
+```
+IA-chien/
+├── dog_breed_identifier/     # Django application
+├── docs/                     # Documentation
+├── scripts/                  # Utility scripts
+├── tests/                    # Automated tests
+├── .dockerignore            # Docker ignore rules
+├── .env                     # Environment template
+├── .env.local               # Local environment (ignored)
+├── .gitignore               # Git ignore rules
+├── .github/                 # GitHub Actions workflows
+├── .gitlab-ci.yml           # GitLab CI/CD configuration
+├── Dockerfile               # Docker configuration
+├── README.md                # This file
+├── requirements.txt         # Python dependencies
+└── docker-compose.yml       # Docker Compose configuration
+```
 
 ## Troubleshooting
 
