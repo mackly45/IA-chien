@@ -21,11 +21,12 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Créer le fichier .env si nécessaire
-if (-not (Test-Path ".env")) {
-    Write-Host "Création du fichier .env à partir de .env.example..." -ForegroundColor Yellow
-    Copy-Item ".env.example" ".env"
-    Write-Host "Fichier .env créé. Veuillez le modifier avec vos informations!" -ForegroundColor Green
+# Créer le fichier .env.local si nécessaire
+if (-not (Test-Path ".env.local")) {
+    Write-Host "Création du fichier .env.local à partir de .env..." -ForegroundColor Yellow
+    Copy-Item ".env" ".env.local"
+    Write-Host "Fichier .env.local créé. Veuillez le modifier avec vos informations!" -ForegroundColor Green
+    Write-Host "Ce fichier est ignoré par Git et ne sera pas commité." -ForegroundColor Yellow
 }
 
 # Construire l'image Docker
@@ -43,7 +44,7 @@ if ($LASTEXITCODE -eq 0) {
 Write-Host "Configuration des secrets pour GitHub Actions..." -ForegroundColor Yellow
 Write-Host "Veuillez ajouter les secrets suivants dans les paramètres de votre dépôt GitHub:" -ForegroundColor Yellow
 Write-Host "1. DOCKER_USERNAME - Votre nom d'utilisateur Docker Hub" -ForegroundColor White
-Write-Host "2. DOCKER_PASSWORD - Votre mot de passe Docker Hub" -ForegroundColor White
+Write-Host "2. DOCKER_PASSWORD - Votre token d'accès personnel Docker Hub" -ForegroundColor White
 Write-Host "3. RENDER_DEPLOY_HOOK - L'URL du hook de déploiement Render" -ForegroundColor White
 
 # Configuration pour Render
@@ -51,12 +52,6 @@ Write-Host "`nConfiguration pour Render:" -ForegroundColor Yellow
 Write-Host "1. Connectez votre dépôt GitHub à Render" -ForegroundColor White
 Write-Host "2. Render détectera automatiquement le Dockerfile" -ForegroundColor White
 Write-Host "3. Ajoutez les variables d'environnement dans le dashboard Render" -ForegroundColor White
-
-# Configuration pour Dokploy
-Write-Host "`nConfiguration pour Dokploy:" -ForegroundColor Yellow
-Write-Host "1. Créez un projet dans Dokploy" -ForegroundColor White
-Write-Host "2. Connectez votre dépôt Git" -ForegroundColor White
-Write-Host "3. Dokploy utilisera le Dockerfile pour le déploiement" -ForegroundColor White
 
 Write-Host "`nInitialisation terminée!" -ForegroundColor Green
 Write-Host "Vous pouvez maintenant utiliser './deploy.ps1 -Auto' pour un déploiement automatique complet." -ForegroundColor Green

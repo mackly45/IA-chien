@@ -19,6 +19,14 @@ print_error() {
     echo -e "\033[1;31m$1\033[0m"
 }
 
+# Chargement des variables d'environnement depuis .env.local
+ENV_FILE=".env.local"
+if [ -f "$ENV_FILE" ]; then
+    export $(cat "$ENV_FILE" | xargs)
+else
+    print_message "Fichier $ENV_FILE non trouvé. Utilisation des variables d'environnement du système."
+fi
+
 # Fonction pour construire l'image Docker
 build_docker_image() {
     print_message "Construction de l'image Docker..."

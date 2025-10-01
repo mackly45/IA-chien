@@ -16,6 +16,20 @@ $DOCKER_IMAGE = "dog-breed-identifier"
 $DOCKER_HUB_REPO = "$env:DOCKER_USERNAME/$DOCKER_IMAGE"
 $TIMESTAMP = Get-Date -Format "yyyyMMdd-HHmmss"
 
+# Chargement des variables d'environnement depuis .env.local
+$envFile = ".env.local"
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        if ($_ -notmatch "^\s*#" -and $_ -match "([^=]+)=(.*)") {
+            $name = $matches[1]
+            $value = $matches[2].Trim()
+            [Environment]::SetEnvironmentVariable($name, $value)
+        }
+    }
+} else {
+    Write-Host "Fichier $envFile non trouvé. Utilisation des variables d'environnement du système." -ForegroundColor Yellow
+}
+
 # Fonction pour construire l'image Docker
 function Build-DockerImage {
     Write-Host "Construction de l'image Docker..." -ForegroundColor Yellow

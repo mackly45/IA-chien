@@ -23,14 +23,15 @@ if ! command -v git &> /dev/null; then
 fi
 git --version
 
-# Créer le fichier .env si nécessaire
-if [ ! -f ".env" ]; then
-    echo -e "\033[1;33mCréation du fichier .env à partir de .env.example...\033[0m"
-    if [ -f ".env.example" ]; then
-        cp .env.example .env
-        echo -e "\033[1;32mFichier .env créé. Veuillez le modifier avec vos informations!\033[0m"
+# Créer le fichier .env.local si nécessaire
+if [ ! -f ".env.local" ]; then
+    echo -e "\033[1;33mCréation du fichier .env.local à partir de .env...\033[0m"
+    if [ -f ".env" ]; then
+        cp .env .env.local
+        echo -e "\033[1;32mFichier .env.local créé. Veuillez le modifier avec vos informations!\033[0m"
+        echo -e "\033[1;33mCe fichier est ignoré par Git et ne sera pas commité.\033[0m"
     else
-        echo -e "\033[1;31mFichier .env.example non trouvé!\033[0m"
+        echo -e "\033[1;31mFichier .env non trouvé!\033[0m"
     fi
 fi
 
@@ -49,7 +50,7 @@ fi
 echo -e "\033[1;33mConfiguration des secrets pour GitHub Actions...\033[0m"
 echo -e "\033[1;37mVeuillez ajouter les secrets suivants dans les paramètres de votre dépôt GitHub:\033[0m"
 echo -e "\033[1;37m1. DOCKER_USERNAME - Votre nom d'utilisateur Docker Hub\033[0m"
-echo -e "\033[1;37m2. DOCKER_PASSWORD - Votre mot de passe Docker Hub\033[0m"
+echo -e "\033[1;37m2. DOCKER_PASSWORD - Votre token d'accès personnel Docker Hub\033[0m"
 echo -e "\033[1;37m3. RENDER_DEPLOY_HOOK - L'URL du hook de déploiement Render\033[0m"
 
 # Configuration pour Render
@@ -57,12 +58,6 @@ echo -e "\n\033[1;33mConfiguration pour Render:\033[0m"
 echo -e "\033[1;37m1. Connectez votre dépôt GitHub à Render\033[0m"
 echo -e "\033[1;37m2. Render détectera automatiquement le Dockerfile\033[0m"
 echo -e "\033[1;37m3. Ajoutez les variables d'environnement dans le dashboard Render\033[0m"
-
-# Configuration pour Dokploy
-echo -e "\n\033[1;33mConfiguration pour Dokploy:\033[0m"
-echo -e "\033[1;37m1. Créez un projet dans Dokploy\033[0m"
-echo -e "\033[1;37m2. Connectez votre dépôt Git\033[0m"
-echo -e "\033[1;37m3. Dokploy utilisera le Dockerfile pour le déploiement\033[0m"
 
 echo -e "\n\033[1;32mInitialisation terminée!\033[0m"
 echo -e "\033[1;32mVous pouvez maintenant utiliser './deploy.sh -Auto' pour un déploiement automatique complet.\033[0m"

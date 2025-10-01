@@ -53,6 +53,27 @@ Run the initialization script:
 ./init-auto-deploy.sh
 ```
 
+### Environment Variables
+
+Create a `.env.local` file from `.env` and configure your personal credentials:
+
+```bash
+cp .env .env.local
+```
+
+Then edit `.env.local` with your actual credentials:
+
+```bash
+# Docker Hub credentials
+DOCKER_USERNAME=your_docker_hub_username
+DOCKER_PASSWORD=your_docker_hub_password
+
+# Deployment hooks
+RENDER_DEPLOY_HOOK=https://api.render.com/deploy/your-hook
+```
+
+**Important**: The `.env.local` file is ignored by Git and will not be committed to the repository, keeping your credentials secure.
+
 ### Automated Deployment Commands
 
 ```bash
@@ -75,21 +96,44 @@ Run the initialization script:
 - Automatically builds and deploys on push to main branch
 - Requires secrets configuration in GitHub repository settings
 
+##### Configuring GitHub Secrets
+1. Go to your GitHub repository
+2. Click on "Settings"
+3. In the left menu, click "Secrets and variables" then "Actions"
+4. Click "New repository secret"
+5. Add the following secrets:
+
+```
+Name: DOCKER_USERNAME
+Value: your_docker_hub_username
+
+Name: DOCKER_PASSWORD
+Value: your_docker_hub_personal_access_token
+
+Name: RENDER_DEPLOY_HOOK
+Value: https://api.render.com/deploy/your-hook-url
+```
+
 #### GitLab CI/CD
 - Configuration file: `.gitlab-ci.yml`
 - Supports automated testing, building, and deployment
 
-### Environment Variables
+##### Configuring GitLab Variables
+1. Go to your GitLab project
+2. Click on "Settings" then "CI /CD"
+3. Expand the "Variables" section
+4. Click "Add variable"
+5. Add the following variables:
 
-Create a `.env` file from `.env.example` and configure:
+```
+Name: DOCKER_USERNAME
+Value: your_docker_hub_username
 
-```bash
-# Docker Hub credentials
-DOCKER_USERNAME=your_docker_hub_username
-DOCKER_PASSWORD=your_docker_hub_password
+Name: DOCKER_PASSWORD
+Value: your_docker_hub_personal_access_token
 
-# Deployment hooks
-RENDER_DEPLOY_HOOK=https://api.render.com/deploy/your-hook
+Name: RENDER_DEPLOY_HOOK
+Value: https://api.render.com/deploy/your-hook-url
 ```
 
 ### Deployment Platforms
@@ -115,7 +159,8 @@ RENDER_DEPLOY_HOOK=https://api.render.com/deploy/your-hook
 - `.gitlab-ci.yml`: GitLab CI/CD configuration
 - `deploy.ps1`: PowerShell deployment script
 - `init-auto-deploy.ps1`: Initialization script
-- `.env.example`: Environment variables template
+- `.env`: Environment variables template
+- `.env.local`: Your personal environment variables (ignored by Git)
 
 ## Development
 
