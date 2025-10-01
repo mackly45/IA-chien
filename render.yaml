@@ -3,6 +3,7 @@ services:
     name: dog-breed-identifier
     env: docker
     plan: free
+    dockerfilePath: Dockerfile.simple
     buildCommand: "chmod +x render_start.sh"
     startCommand: "./render_start.sh"
     envVars:

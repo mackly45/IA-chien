@@ -1,27 +1,26 @@
 #!/usr/bin/env python
 """
-Script de vérification de santé pour Render
+Health check script for Render deployment
 """
 import os
 import sys
 import django
 from django.conf import settings
 
-# Ajouter le répertoire du projet au chemin Python
+# Add project directory to Python path
 sys.path.append('/app/dog_breed_identifier')
 
-# Configurer Django
+# Setup Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dog_identifier.settings')
 django.setup()
 
 def check_health():
-    """Vérifier la santé de l'application"""
+    """Check application health"""
     try:
-        # Vérifier que Django peut se charger
+        # Check that Django can load
         from django.db import connection
-        from django.core.management import execute_from_command_line
         
-        # Vérifier la connexion à la base de données
+        # Check database connection
         connection.ensure_connection()
         
         print("Health check passed")

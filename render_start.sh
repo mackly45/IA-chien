@@ -12,7 +12,7 @@ python manage.py migrate --noinput
 echo "Collecting static files..."
 python manage.py collectstatic --noinput --verbosity=0
 
-# Démarrer l'application avec Gunicorn
+# Démarrer l'application avec Gunicorn sur le port fourni par Render
 echo "Starting application on port $PORT..."
 exec gunicorn --bind 0.0.0.0:$PORT --chdir /app/dog_breed_identifier dog_identifier.wsgi:application
 
