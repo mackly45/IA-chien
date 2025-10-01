@@ -22,6 +22,9 @@ class DockerBuildTest(unittest.TestCase):
         if result.returncode != 0:
             print("Docker build stdout:", result.stdout)
             print("Docker build stderr:", result.stderr)
+            # Also print combined output for better debugging
+            print("Docker build combined output:")
+            print(result.stdout + result.stderr)
         self.assertEqual(result.returncode, 0, f"Échec de la construction Docker: {result.stderr}")
     
     def test_docker_run(self):
@@ -42,6 +45,9 @@ class DockerBuildTest(unittest.TestCase):
         if result.returncode != 0:
             print("Docker run stdout:", result.stdout)
             print("Docker run stderr:", result.stderr)
+            # Also print combined output for better debugging
+            print("Docker run combined output:")
+            print(result.stdout + result.stderr)
         self.assertEqual(result.returncode, 0, f"Échec du lancement du conteneur: {result.stderr}")
         
         # Attendre que le serveur démarre

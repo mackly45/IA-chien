@@ -20,8 +20,8 @@ RUN apt-get update \
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt /app/
 
-# Install Python dependencies with specific constraints to avoid version issues
-RUN pip install --no-cache-dir --constraint requirements.txt -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
 COPY . /app/
