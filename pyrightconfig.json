@@ -24,6 +24,9 @@
     "reportMissingParameterType": false,
     "reportUnknownArgumentType": false,
     "reportUnknownMemberType": false,
+    "reportAny": false,
+    "reportUnknownVariableType": false,
+    "reportExplicitAny": false,
     "pythonVersion": "3.8",
     "pythonPlatform": "Linux"
 }

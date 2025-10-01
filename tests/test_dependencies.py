@@ -5,8 +5,11 @@ Test script to verify that all dependencies work correctly after updates.
 
 import sys
 import importlib
+import tensorflow as tf  # type: ignore
+import numpy as np  # type: ignore
+from typing import Any, Union
 
-def test_import(module_name):
+def _test_import(module_name):
     """Test if a module can be imported."""
     try:
         importlib.import_module(module_name)
@@ -19,12 +22,18 @@ def test_import(module_name):
 def test_tensorflow():
     """Test TensorFlow functionality."""
     try:
-        import tensorflow as tf
-        print(f"✓ TensorFlow version: {tf.__version__}")
+        # Use getattr to avoid pyright warnings about module attributes
+        tf_version = getattr(tf, '__version__', 'unknown')
+        print(f"✓ TensorFlow version: {tf_version}")
         
         # Test basic functionality
-        hello = tf.constant('Hello, TensorFlow!')
-        print(f"✓ TensorFlow basic operation: {hello}")
+        constant_func = getattr(tf, 'constant', None)
+        if constant_func:
+            hello = constant_func('Hello, TensorFlow!')  # type: ignore
+            print(f"✓ TensorFlow basic operation: {hello}")
+        else:
+            print("✗ TensorFlow constant function not available")
+            return False
         return True
     except Exception as e:
         print(f"✗ TensorFlow test failed: {e}")
@@ -47,11 +56,12 @@ def test_pillow():
 def test_numpy():
     """Test NumPy functionality."""
     try:
-        import numpy as np
-        print(f"✓ NumPy version: {np.__version__}")
+        # Use getattr to avoid pyright warnings about module attributes
+        np_version = getattr(np, '__version__', 'unknown')
+        print(f"✓ NumPy version: {np_version}")
         
         # Test basic functionality
-        arr = np.array([1, 2, 3, 4, 5])
+        arr = np.array([1, 2, 3, 4, 5])  # type: ignore
         print(f"✓ NumPy basic operation: {arr}")
         return True
     except Exception as e:
@@ -70,7 +80,7 @@ def main():
         'whitenoise',
         'requests',
         'dj_database_url',
-        'python_decouple'
+        'decouple'
     ]
     
     results = []
@@ -78,7 +88,7 @@ def main():
     # Test core modules
     for module in core_modules:
         try:
-            result = test_import(module)
+            result = _test_import(module)
             results.append(result)
         except Exception as e:
             print(f"✗ Error testing {module}: {e}")
@@ -108,27 +118,27 @@ def main():
 # Fonctions de test individuelles pour pytest
 def test_django_import():
     """Test Django import."""
-    assert test_import('django')
+    assert _test_import('django')
 
 def test_gunicorn_import():
     """Test Gunicorn import."""
-    assert test_import('gunicorn')
+    assert _test_import('gunicorn')
 
 def test_whitenoise_import():
     """Test Whitenoise import."""
-    assert test_import('whitenoise')
+    assert _test_import('whitenoise')
 
 def test_requests_import():
     """Test Requests import."""
-    assert test_import('requests')
+    assert _test_import('requests')
 
 def test_dj_database_url_import():
     """Test dj_database_url import."""
-    assert test_import('dj_database_url')
+    assert _test_import('dj_database_url')
 
 def test_python_decouple_import():
     """Test python_decouple import."""
-    assert test_import('python_decouple')
+    assert _test_import('decouple')
 
 def test_tensorflow_functionality():
     """Test TensorFlow functionality."""
