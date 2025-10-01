@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Django: Runserver",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/dog_breed_identifier/manage.py",
             "args": [
@@ -14,7 +14,7 @@
         },
         {
             "name": "Django: Tests",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/dog_breed_identifier/manage.py",
             "args": [
@@ -25,7 +25,7 @@
         },
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
