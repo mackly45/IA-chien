@@ -18,6 +18,10 @@ class DockerBuildTest(unittest.TestCase):
             capture_output=True,
             text=True
         )
+        # Print stdout and stderr for better debugging
+        if result.returncode != 0:
+            print("Docker build stdout:", result.stdout)
+            print("Docker build stderr:", result.stderr)
         self.assertEqual(result.returncode, 0, f"Échec de la construction Docker: {result.stderr}")
     
     def test_docker_run(self):
@@ -34,6 +38,10 @@ class DockerBuildTest(unittest.TestCase):
             'dog-breed-identifier-test'
         ], capture_output=True, text=True)
         
+        # Print stdout and stderr for better debugging
+        if result.returncode != 0:
+            print("Docker run stdout:", result.stdout)
+            print("Docker run stderr:", result.stderr)
         self.assertEqual(result.returncode, 0, f"Échec du lancement du conteneur: {result.stderr}")
         
         # Attendre que le serveur démarre
