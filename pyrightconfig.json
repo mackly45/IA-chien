@@ -1,0 +1,29 @@
+{
+    "include": [
+        "."
+    ],
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        "**/migrations"
+    ],
+    "ignore": [
+        "tests/test_django_health.py",
+        "tests/test_django_run.py",
+        "dog_breed_identifier/test_docker_config.py"
+    ],
+    "defineConstant": {
+        "DEBUG": true
+    },
+    "reportMissingImports": false,
+    "reportMissingTypeStubs": false,
+    "reportUnusedImport": false,
+    "reportUnusedVariable": false,
+    "reportUnusedCallResult": false,
+    "reportUnknownParameterType": false,
+    "reportMissingParameterType": false,
+    "reportUnknownArgumentType": false,
+    "reportUnknownMemberType": false,
+    "pythonVersion": "3.8",
+    "pythonPlatform": "Linux"
+}

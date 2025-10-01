@@ -27,6 +27,7 @@ def test_wsgi_import():
     """Test if the WSGI application can be imported."""
     print("Testing WSGI application import...")
     try:
+        # pylint: disable=import-error
         from dog_identifier.wsgi import application
         print("✓ WSGI application imported successfully")
         return True
@@ -38,6 +39,7 @@ def test_settings_import():
     """Test if the settings module can be imported."""
     print("Testing settings module import...")
     try:
+        # pylint: disable=import-error
         from dog_identifier import settings
         print("✓ Settings module imported successfully")
         return True
