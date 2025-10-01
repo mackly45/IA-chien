@@ -13,3 +13,4 @@ isort>=5.0.0
 # Outils de développement
 django-extensions>=3.0.0
 ipython>=8.0.0
+setuptools>=78.1.1

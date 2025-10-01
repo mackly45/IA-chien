@@ -1,4 +1,6 @@
 # To ensure app dependencies are ported from your virtual environment/host machine into your container, run 'pip freeze > requirements.txt' in the terminal to overwrite this file
+# Explicitly specify secure versions to avoid vulnerabilities
+setuptools>=78.1.1
 django==5.0.1
 gunicorn==21.2.0
 whitenoise==6.6.0
