@@ -23,7 +23,7 @@ RUN pip install --upgrade pip setuptools>=78.1.1
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt /app/
 
-# Install Python dependencies
+# Install Python dependencies with secure versions
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project

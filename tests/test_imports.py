@@ -10,7 +10,7 @@ def test_django_import():
     """Test that Django can be imported and configured."""
     # Add the project directory to Python path
     project_dir = os.path.join(os.path.dirname(__file__), '..', 'dog_breed_identifier')
-    sys.path.insert(0, project_dir)
+    sys.path.insert(0, os.path.abspath(project_dir))
     
     try:
         import django
@@ -31,6 +31,8 @@ def test_django_import():
         return True
     except Exception as e:
         print(f"✗ Failed to import Django project: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 if __name__ == "__main__":
