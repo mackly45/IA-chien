@@ -34,7 +34,8 @@ jobs:
     - name: Tests unitaires
       run: |
         pip install pytest pytest-django
-        pytest tests/
+        cd dog_breed_identifier
+        pytest ../tests/
 
   security-check:
     runs-on: ubuntu-latest
