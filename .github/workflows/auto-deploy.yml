@@ -57,12 +57,12 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Mise à jour de pip à une version sécurisée
+    - name: Mise à jour de pip
       run: |
-        # Install a secure version of pip that doesn't have the vulnerability
+        # Install the latest available version of pip
         python -m pip install --upgrade pip
         
-    - name: Installation des dépendances du projet avec versions sécurisées
+    - name: Installation des dépendances du projet
       run: |
         pip install -r requirements.txt
         pip install -r tests/test_requirements.txt

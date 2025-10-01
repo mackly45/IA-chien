@@ -17,13 +17,13 @@ RUN apt-get update \
         pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip and setuptools to secure versions
-RUN pip install --upgrade pip setuptools>=78.1.1
+# Upgrade pip and setuptools to latest versions
+RUN pip install --upgrade pip setuptools
 
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt /app/
 
-# Install Python dependencies with secure versions
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
