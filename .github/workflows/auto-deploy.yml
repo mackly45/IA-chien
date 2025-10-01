@@ -35,7 +35,7 @@ jobs:
       run: |
         pip install pytest pytest-django
         cd dog_breed_identifier
-        pytest ../tests/
+        PYTHONPATH=. pytest ../tests/
 
   security-check:
     runs-on: ubuntu-latest
