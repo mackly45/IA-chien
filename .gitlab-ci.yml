@@ -1,0 +1,43 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
+
+before_script:
+  - docker info
+
+test:
+  stage: test
+  image: python:3.11
+  script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - cd dog_breed_identifier
+    - python manage.py check
+  only:
+    - main
+
+build:
+  stage: build
+  image: docker:20.10.16-dind
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE:latest
+  only:
+    - main
+
+deploy-render:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - curl -X POST $RENDER_DEPLOY_HOOK
+  only:
+    - main
+  when: manual

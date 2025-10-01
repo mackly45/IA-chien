@@ -12,20 +12,15 @@ services:
       - ./dog_breed_identifier/media:/app/dog_breed_identifier/media
       - ./dog_breed_identifier/staticfiles:/app/dog_breed_identifier/staticfiles
     command: python dog_breed_identifier/manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - db
 
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: dog_breed_db
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_USER: doguser
-      MYSQL_PASSWORD: dogpassword
-    volumes:
-      - mysql_data:/var/lib/mysql
+  # Production version with Gunicorn
+  web-prod:
+    build: .
     ports:
-      - "3306:3306"
-
-volumes:
-  mysql_data:
+      - "8000:8000"
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=django-insecure-production-key-change-in-deployment
+    volumes:
+      - ./dog_breed_identifier/media:/app/dog_breed_identifier/media
+      - ./dog_breed_identifier/staticfiles:/app/dog_breed_identifier/staticfiles

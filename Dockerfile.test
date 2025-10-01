@@ -14,7 +14,6 @@ RUN apt-get update \
         build-essential \
         libjpeg-dev \
         zlib1g-dev \
-        pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first to leverage Docker cache
@@ -29,9 +28,6 @@ COPY . /app/
 # Change to the project directory
 WORKDIR /app/dog_breed_identifier
 
-# Collect static files
-RUN python manage.py collectstatic --noinput --verbosity=0
-
 # Create a non-root user
 RUN adduser --disabled-password --gecos '' appuser
 RUN chown -R appuser:appuser /app
@@ -41,4 +37,4 @@ USER appuser
 EXPOSE $PORT
 
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "--chdir", "/app/dog_breed_identifier", "dog_identifier.wsgi:application"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:$PORT"]

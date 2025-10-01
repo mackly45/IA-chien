@@ -1,0 +1,28 @@
+[
+  {
+    "session_id": "session_20251001_093514",
+    "start_time": "2025-10-01T09:35:14.696216",
+    "end_time": "2025-10-01T12:09:02.183003",
+    "epochs": 50,
+    "batch_size": 32,
+    "final_accuracy": 0.9050526934605113,
+    "final_loss": 0.10953618910347532,
+    "training_time": 181,
+    "total_images": 0,
+    "breeds_trained": 77,
+    "auto_collect": true
+  },
+  {
+    "session_id": "session_20251001_094627",
+    "start_time": "2025-10-01T09:46:27.825589",
+    "end_time": "2025-10-01T12:23:15.353296",
+    "epochs": 50,
+    "batch_size": 32,
+    "final_accuracy": 0.9782086547279711,
+    "final_loss": 0.03113470028129272,
+    "training_time": 245,
+    "total_images": 0,
+    "breeds_trained": 77,
+    "auto_collect": true
+  }
+]

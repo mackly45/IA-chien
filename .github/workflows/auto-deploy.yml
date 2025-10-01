@@ -1,0 +1,63 @@
+name: Déploiement Automatique
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Configuration Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Installation des dépendances
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Tests de l'application
+      run: |
+        cd dog_breed_identifier
+        python manage.py check
+
+  build-and-deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Configuration Docker
+      uses: docker/setup-buildx-action@v2
+      
+    - name: Login Docker Hub
+      if: success()
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build et push Docker image
+      if: success()
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/dog-breed-identifier:latest
+        
+    - name: Déploiement sur Render
+      if: success()
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+        
+    - name: Notification de succès
+      if: success()
+      run: echo "Déploiement automatique terminé avec succès !"
