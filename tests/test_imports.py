@@ -35,6 +35,10 @@ def test_django_import():
         traceback.print_exc()
         return False
 
+def test_django_import_pytest():
+    """Pytest version of Django import test."""
+    assert test_django_import() is True
+
 if __name__ == "__main__":
     success = test_django_import()
     sys.exit(0 if success else 1)

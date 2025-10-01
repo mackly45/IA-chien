@@ -44,11 +44,7 @@ jobs:
       run: |
         pip install pytest pytest-django
         # Set the Python path correctly and run tests from the project root
-        PYTHONPATH=dog_breed_identifier pytest tests/ -v -s
-        
-    - name: Tests des dépendances
-      run: |
-        python tests/test_dependencies.py
+        PYTHONPATH=dog_breed_identifier pytest tests/ -v -s --disable-warnings
 
   security-check:
     runs-on: ubuntu-latest

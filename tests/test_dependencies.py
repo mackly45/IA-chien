@@ -105,5 +105,42 @@ def main():
         print(f"✗ {passed}/{total} tests passed.")
         return 1
 
+# Fonctions de test individuelles pour pytest
+def test_django_import():
+    """Test Django import."""
+    assert test_import('django')
+
+def test_gunicorn_import():
+    """Test Gunicorn import."""
+    assert test_import('gunicorn')
+
+def test_whitenoise_import():
+    """Test Whitenoise import."""
+    assert test_import('whitenoise')
+
+def test_requests_import():
+    """Test Requests import."""
+    assert test_import('requests')
+
+def test_dj_database_url_import():
+    """Test dj_database_url import."""
+    assert test_import('dj_database_url')
+
+def test_python_decouple_import():
+    """Test python_decouple import."""
+    assert test_import('python_decouple')
+
+def test_tensorflow_functionality():
+    """Test TensorFlow functionality."""
+    assert test_tensorflow()
+
+def test_pillow_functionality():
+    """Test Pillow functionality."""
+    assert test_pillow()
+
+def test_numpy_functionality():
+    """Test NumPy functionality."""
+    assert test_numpy()
+
 if __name__ == "__main__":
     sys.exit(main())

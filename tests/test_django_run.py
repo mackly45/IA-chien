@@ -58,6 +58,10 @@ def test_django_run():
         traceback.print_exc()
         return False
 
+def test_django_run_pytest():
+    """Pytest version of Django run test."""
+    assert test_django_run() is True
+
 if __name__ == "__main__":
     success = test_django_run()
     print(f"Test result: {'PASS' if success else 'FAIL'}")
