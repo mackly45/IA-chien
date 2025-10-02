@@ -1,57 +1,57 @@
-# Dog Breed Identifier
+# Identificateur de Race de Chien
 
-A Django application that uses machine learning to identify dog breeds from images.
+Une application Django qui utilise l'apprentissage automatique pour identifier les races de chiens à partir d'images.
 
-## Features
+## Fonctionnalités
 
-- 🐶 **Dog Breed Recognition**: Identify over 120 dog breeds using deep learning
-- 🐕 **Web Interface**: User-friendly web application for image upload
-- 🐳 **Docker Support**: Containerized application for easy deployment
-- ☁️ **Multi-platform Deployment**: Deploy to Docker Hub, Render, and more
-- 🔄 **CI/CD Integration**: Automated testing and deployment with GitHub Actions and GitLab CI
+- 🐶 **Reconnaissance de Race de Chien** : Identifie plus de 120 races de chiens en utilisant l'apprentissage profond
+- 🐕 **Interface Web** : Application web conviviale pour le téléchargement d'images
+- 🐳 **Support Docker** : Application conteneurisée pour un déploiement facile
+- ☁️ **Déploiement Multi-plateformes** : Déploiement sur Docker Hub, Render, et plus
+- 🔄 **Intégration CI/CD** : Tests et déploiement automatisés avec GitHub Actions et GitLab CI
 
-## Docker Deployment
+## Déploiement Docker
 
-This project includes Docker configuration for easy deployment across multiple platforms.
+Ce projet inclut une configuration Docker pour un déploiement facile sur plusieurs plateformes.
 
-### Building the Docker Image
+### Construction de l'Image Docker
 
-To build the Docker image:
+Pour construire l'image Docker :
 
 ```bash
-# Using the build script (Linux/Mac)
+# Utilisation du script de construction (Linux/Mac)
 ./build-docker.sh
 
-# Using the build script (Windows)
+# Utilisation du script de construction (Windows)
 ./build-docker.ps1
 
-# Or manually:
+# Ou manuellement :
 docker build -t dog-breed-identifier .
 ```
 
-### Running the Application Locally
+### Exécution de l'Application Localement
 
 ```bash
-# Using docker-compose (recommended for development)
+# Utilisation de docker-compose (recommandé pour le développement)
 docker-compose up
 
-# Using docker run
+# Utilisation de docker run
 docker run -p 8000:8000 dog-breed-identifier
 ```
 
-## Automated Deployment
+## Déploiement Automatisé
 
-This project includes full automated deployment capabilities across multiple platforms.
+Ce projet inclut des capacités de déploiement automatisé complètes sur plusieurs plateformes.
 
-### Prerequisites
+### Prérequis
 
-1. Docker installed and running
-2. Git installed
-3. Accounts on deployment platforms (Docker Hub, Render)
+1. Docker installé et en cours d'exécution
+2. Git installé
+3. Comptes sur les plateformes de déploiement (Docker Hub, Render)
 
-### Initial Setup
+### Configuration Initiale
 
-Run the initialization script:
+Exécutez le script d'initialisation :
 
 ```bash
 # Windows
@@ -61,92 +61,92 @@ Run the initialization script:
 ./init-auto-deploy.sh
 ```
 
-### Environment Variables
+### Variables d'Environnement
 
-Create a `.env.local` file from `.env` and configure your personal credentials:
+Créez un fichier `.env.local` à partir de `.env` et configurez vos identifiants personnels :
 
 ```bash
 cp .env .env.local
 ```
 
-Then edit `.env.local` with your actual credentials:
+Ensuite, modifiez `.env.local` avec vos identifiants réels :
 
 ```bash
-# Docker Hub credentials
-DOCKER_USERNAME=your_docker_hub_username
-DOCKER_PASSWORD=your_docker_hub_password
+# Identifiants Docker Hub
+DOCKER_USERNAME=votre_nom_utilisateur_docker_hub
+DOCKER_PASSWORD=votre_mot_de_passe_docker_hub
 
-# Deployment hooks
-RENDER_DEPLOY_HOOK=https://api.render.com/deploy/your-hook
+# Hooks de déploiement
+RENDER_DEPLOY_HOOK=https://api.render.com/deploy/votre-hook
 ```
 
-**Important**: The `.env.local` file is ignored by Git and will not be committed to the repository, keeping your credentials secure.
+**Important** : Le fichier `.env.local` est ignoré par Git et ne sera pas commité dans le dépôt, gardant vos identifiants sécurisés.
 
-### Automated Deployment Commands
+### Commandes de Déploiement Automatisé
 
 ```bash
-# Fully automated deployment to all platforms
+# Déploiement entièrement automatisé sur toutes les plateformes
 ./deploy.ps1 -Auto
 
-# Interactive deployment menu
+# Menu de déploiement interactif
 ./deploy.ps1
 
-# Deploy to specific platform
+# Déploiement sur une plateforme spécifique
 ./deploy.ps1 -Platform dockerhub
 ./deploy.ps1 -Platform render
 ./deploy.ps1 -Platform local
 ```
 
-### CI/CD Configuration
+### Configuration CI/CD
 
 #### GitHub Actions
-- Workflow file: `.github/workflows/auto-deploy.yml`
-- Automatically builds and deploys on push to main branch
-- Requires secrets configuration in GitHub repository settings
+- Fichier de workflow : `.github/workflows/auto-deploy.yml`
+- Construit et déploie automatiquement lors d'un push sur la branche principale
+- Nécessite la configuration des secrets dans les paramètres du dépôt GitHub
 
-##### Configuring GitHub Secrets
-1. Go to your GitHub repository
-2. Click on "Settings"
-3. In the left menu, click "Secrets and variables" then "Actions"
-4. Click "New repository secret"
-5. Add the following secrets:
+##### Configuration des Secrets GitHub
+1. Allez dans votre dépôt GitHub
+2. Cliquez sur "Settings"
+3. Dans le menu de gauche, cliquez sur "Secrets and variables" puis "Actions"
+4. Cliquez sur "New repository secret"
+5. Ajoutez les secrets suivants :
 
 ```
 Name: DOCKER_USERNAME
-Value: your_docker_hub_username
+Value: votre_nom_utilisateur_docker_hub
 
 Name: DOCKER_PASSWORD
-Value: your_docker_hub_personal_access_token
+Value: votre_token_d'accès_personnel_docker_hub
 
 Name: RENDER_DEPLOY_HOOK
-Value: https://api.render.com/deploy/your-hook-url
+Value: https://api.render.com/deploy/votre-url-hook
 ```
 
 #### GitLab CI/CD
-- Configuration file: `.gitlab-ci.yml`
-- Supports automated testing, building, and deployment
+- Fichier de configuration : `.gitlab-ci.yml`
+- Supporte les tests, la construction et le déploiement automatisés
 
-##### Configuring GitLab Variables
-1. Go to your GitLab project
-2. Click on "Settings" then "CI /CD"
-3. Expand the "Variables" section
-4. Click "Add variable"
-5. Add the following variables:
+##### Configuration des Variables GitLab
+1. Allez dans votre projet GitLab
+2. Cliquez sur "Settings" puis "CI /CD"
+3. Développez la section "Variables"
+4. Cliquez sur "Add variable"
+5. Ajoutez les variables suivantes :
 
 ```
 Name: DOCKER_USERNAME
-Value: your_docker_hub_username
+Value: votre_nom_utilisateur_docker_hub
 
 Name: DOCKER_PASSWORD
-Value: your_docker_hub_personal_access_token
+Value: votre_token_d'accès_personnel_docker_hub
 
 Name: RENDER_DEPLOY_HOOK
-Value: https://api.render.com/deploy/your-hook-url
+Value: https://api.render.com/deploy/votre-url-hook
 ```
 
-### Deployment Platforms
+### Plateformes de Déploiement
 
-#### 1. Local Deployment
+#### 1. Déploiement Local
 ```bash
 ./deploy.ps1 -Platform local
 ```
@@ -157,68 +157,68 @@ Value: https://api.render.com/deploy/your-hook-url
 ```
 
 #### 3. Render
-1. Connect repository to Render
-2. Add environment variables in Render dashboard
-3. Deployment triggered automatically via webhook
+1. Connectez le dépôt à Render
+2. Ajoutez les variables d'environnement dans le tableau de bord Render
+3. Le déploiement est déclenché automatiquement via webhook
 
-### Deployment Configuration Files
+### Fichiers de Configuration de Déploiement
 
-- `.github/workflows/auto-deploy.yml`: GitHub Actions workflow
-- `.gitlab-ci.yml`: GitLab CI/CD configuration
-- `deploy.ps1`: PowerShell deployment script
-- `init-auto-deploy.ps1`: Initialization script
-- `.env`: Environment variables template
-- `.env.local`: Your personal environment variables (ignored by Git)
+- `.github/workflows/auto-deploy.yml` : Workflow GitHub Actions
+- `.gitlab-ci.yml` : Configuration GitLab CI/CD
+- `deploy.ps1` : Script de déploiement PowerShell
+- `init-auto-deploy.ps1` : Script d'initialisation
+- `.env` : Modèle de variables d'environnement
+- `.env.local` : Vos variables d'environnement personnelles (ignorées par Git)
 
-## Development
+## Développement
 
-To run the application in development mode:
+Pour exécuter l'application en mode développement :
 
 ```bash
-# Using docker-compose
+# Utilisation de docker-compose
 docker-compose up
 
-# The development version uses Django's development server
-# and mounts local volumes for live code updates
+# La version de développement utilise le serveur de développement Django
+# et monte les volumes locaux pour les mises à jour de code en direct
 ```
 
 ## Production
 
-For production deployment, the application uses Gunicorn as the WSGI server.
+Pour le déploiement en production, l'application utilise Gunicorn comme serveur WSGI.
 
-The production Docker image:
-- Uses Gunicorn for serving the application
-- Runs as a non-root user for security
-- Collects static files during the build process
-- Is optimized for size and performance
+L'image Docker de production :
+- Utilise Gunicorn pour servir l'application
+- S'exécute en tant qu'utilisateur non-root pour la sécurité
+- Collecte les fichiers statiques pendant le processus de construction
+- Est optimisée pour la taille et les performances
 
-## Project Structure
+## Structure du Projet
 
 ```
 IA-chien/
-├── dog_breed_identifier/     # Django application
+├── dog_breed_identifier/     # Application Django
 ├── docs/                     # Documentation
-├── scripts/                  # Utility scripts
-├── tests/                    # Automated tests
-├── .dockerignore            # Docker ignore rules
-├── .env                     # Environment template
-├── .env.local               # Local environment (ignored)
-├── .gitignore               # Git ignore rules
-├── .github/                 # GitHub Actions workflows
-├── .gitlab-ci.yml           # GitLab CI/CD configuration
-├── Dockerfile               # Docker configuration
-├── README.md                # This file
-├── requirements.txt         # Python dependencies
-└── docker-compose.yml       # Docker Compose configuration
+├── scripts/                  # Scripts utilitaires
+├── tests/                    # Tests automatisés
+├── .dockerignore            # Règles d'ignore Docker
+├── .env                     # Modèle d'environnement
+├── .env.local               # Environnement local (ignoré)
+├── .gitignore               # Règles d'ignore Git
+├── .github/                 # Workflows GitHub Actions
+├── .gitlab-ci.yml           # Configuration GitLab CI/CD
+├── Dockerfile               # Configuration Docker
+├── README.md                # Ce fichier
+├── requirements.txt         # Dépendances Python
+└── docker-compose.yml       # Configuration Docker Compose
 ```
 
-## Troubleshooting
+## Dépannage
 
-If you encounter issues:
+Si vous rencontrez des problèmes :
 
-1. Make sure Docker is installed and running
-2. Check that ports are not already in use
-3. Verify environment variables are set correctly
-4. Check Docker logs: `docker logs <container_name>`
+1. Assurez-vous que Docker est installé et en cours d'exécution
+2. Vérifiez que les ports ne sont pas déjà utilisés
+3. Vérifiez que les variables d'environnement sont correctement définies
+4. Vérifiez les journaux Docker : `docker logs <nom_du_conteneur>`
 
-For more information, please refer to the individual configuration files.
+Pour plus d'informations, veuillez vous référer aux fichiers de configuration individuels.
